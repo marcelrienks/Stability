@@ -1,0 +1,42 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "edit": "ask",
+    "bash": "ask",
+    "webfetch": "ask",
+    "write": "ask"
+  },
+  "agent": {
+    "build": {
+      "mode": "primary",
+      "model": "opencode/grok-code",
+      "fallback": "opencode/gpt-5-nano"
+    },
+    "plan": {
+      "mode": "primary",
+      "model": "opencode/grok-code",
+      "fallback": "opencode/gpt-5-nano"
+    }
+  },
+  "formatter": {
+    "clang-format": {
+      "command": ["clang-format", "-i", "$FILE"],
+      "extensions": [".cpp", ".hpp", ".c", ".h"]
+    },
+    "dotnet-format": {
+      "command": ["dotnet", "format", "--include", "$FILE"],
+      "extensions": [".cs"]
+    },
+    "gofmt": {
+      "command": ["gofmt", "-w", "$FILE"],
+      "extensions": [".go"]
+    }
+  },
+  "command": {
+    "review": {
+      "template": "Read into context the README.md and all linked documents and diagrams to understand the current project. Do not output a summary or analyze the contents, just confirm a very brief understanding of the project",
+      "description": "Review documents for context",
+      "agent": "plan"
+    }
+  }
+}
