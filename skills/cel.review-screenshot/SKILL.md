@@ -21,12 +21,12 @@ When you invoke this skill, it will:
 
 ### Option 1: Using the Slash Command
 ```
-/review-screenshot
+/cel.review-screenshot
 ```
 
 ### Option 2: Calling as a Named Skill
 ```
-skill: "review-screenshot"
+skill: "cel.review-screenshot"
 ```
 
 After invoking the skill, you can then ask questions about the screenshot, such as:
@@ -91,7 +91,7 @@ The skill executes the following process:
 This skill is designed to streamline debugging workflows when working with agents in the command line or VS Code:
 
 1. **Take a screenshot** during your development session when you encounter an issue, error, or unexpected behavior
-2. **Invoke the skill** with `/review-screenshot` while talking to the agent
+2. **Invoke the skill** with `/cel.review-screenshot` while talking to the agent
 3. **The agent analyzes** the visual output (errors, terminal state, UI, logs, etc.) in the context of your current debugging task
 4. **Get detailed insights** about what's happening, combining visual information with knowledge of your session activity
 5. **Accelerate troubleshooting** by having the agent understand both code-level context and visual debugging information
@@ -108,7 +108,7 @@ Use this skill when you want to:
 ## Example Interaction
 
 ```
-User: /review-screenshot
+User: /cel.review-screenshot
 User: What error messages are visible?
 
 Copilot:
