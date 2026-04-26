@@ -21,12 +21,12 @@ When you invoke this skill, it will:
 
 ### Option 1: Using the Slash Command
 ```
-/review screenshot
+/review-screenshot
 ```
 
 ### Option 2: Calling as a Named Skill
 ```
-skill: "review screenshot"
+skill: "review-screenshot"
 ```
 
 After invoking the skill, you can then ask questions about the screenshot, such as:
@@ -39,25 +39,71 @@ After invoking the skill, you can then ask questions about the screenshot, such 
 
 The skill executes the following process:
 
-1. **Detect Platform**: Identifies the operating system and environment (Windows, WSL, Linux, or macOS)
-2. **Locate Screenshot Directory**: Accesses the appropriate screenshots directory based on your platform:
-   - **Windows**: `%USERPROFILE%\Pictures\Screenshots` (current user's screenshot folder)
-   - **WSL**: `/mnt/c/Users/<username>/Pictures/Screenshots` (Windows user's screenshot directory via WSL mount)
-   - **Linux**: `~/Pictures/Screenshots` or `~/.local/share/screenshots` (standard Linux screenshot locations)
-   - **macOS**: Detects the configured screenshot location (typically `~/Desktop`, `~/Pictures`, or `~/Library/CloudStorage/...`)
-3. **Find Latest File**: Scans the detected directory to identify the most recently modified image file
-4. **Load Image**: Loads the latest screenshot into memory
-5. **Analyze Content**: Examines the image to understand its visual elements
-6. **Answer Questions**: Responds to your questions about the screenshot content, considering the context of your current session
+1. **Detect Platform**: Identifies the operating system (Windows, macOS, or Linux/WSL)
+2. **Locate Screenshot Directory**: Based on the detected platform, checks the default screenshot location
+3. **Filter Recent Files**: Scans the detected directory for image files (PNG, JPEG, or GIF) modified within the last 2 minutes
+4. **Select Latest**: Identifies the most recently modified image file from the filtered results
+5. **Fallback to Clipboard**: If no recent file is found, checks the system clipboard for a currently stored image
+6. **Load Image**: Loads the selected screenshot (from file or clipboard) into memory
+7. **Analyze Content**: Examines the image to understand its visual elements
+8. **Answer Questions**: Analyzes the screenshot in the context of your current debugging or development session. The agent understands what task you're working on and provides detailed analysis such as:
+   - Error messages or stack traces visible
+   - State of your code editor or terminal
+   - UI elements, logs, or diagnostics relevant to your current work
+   - Visual confirmation of expected vs. actual behavior
+   - Recommendations based on what's visible in the screenshot and your current session activity
+
+## Platform-Specific Details
+
+### Windows
+- **Default Location**: `%USERPROFILE%\Pictures\Screenshots`
+- **Workflow**: 
+  1. Detect Windows OS
+  2. Access the Screenshots folder in the user's Pictures directory
+  3. Search for files modified within the last 2 minutes
+  4. If no file found, check Windows clipboard for an image using `Get-ClipboardImage`
+  5. Load and analyze the most recent file or clipboard image
+
+### macOS
+- **Default Locations** (checked in order): `~/Documents`, `~/Desktop`
+- **Workflow**:
+  1. Detect macOS OS
+  2. Check Documents folder for recent screenshots
+  3. If not found, check Desktop folder
+  4. Search for files modified within the last 2 minutes
+  5. If no file found, check macOS clipboard for an image using `pbpaste`
+  6. Load and analyze the most recent file or clipboard image
+
+### Linux/WSL
+- **Default Locations** (checked in order):
+  1. `/mnt/c/Users/<username>/Pictures/Screenshots` (Windows drive via WSL mount)
+  2. `~/Pictures/Screenshots` (native Linux location)
+- **Workflow**:
+  1. Detect Linux/WSL environment
+  2. Attempt to access Windows Screenshots directory through the `/mnt/c/` mount point
+  3. If not found, fall back to native Linux screenshot directory
+  4. Search for files modified within the last 2 minutes
+  5. If no file found, check system clipboard for an image using `xclip` or `xsel`
+  6. Load and analyze the most recent file or clipboard image
+
+## Use Case: Debugging in Agent Sessions
+
+This skill is designed to streamline debugging workflows when working with agents in the command line or VS Code:
+
+1. **Take a screenshot** during your development session when you encounter an issue, error, or unexpected behavior
+2. **Invoke the skill** with `/review-screenshot` while talking to the agent
+3. **The agent analyzes** the visual output (errors, terminal state, UI, logs, etc.) in the context of your current debugging task
+4. **Get detailed insights** about what's happening, combining visual information with knowledge of your session activity
+5. **Accelerate troubleshooting** by having the agent understand both code-level context and visual debugging information
 
 ## When to Use This Skill
 
 Use this skill when you want to:
 - Review the latest screenshot quickly without manual file navigation
-- Get AI analysis of what's shown in your screenshots
-- Ask questions about visual content in context
-- Troubleshoot UI issues or visual problems
-- Document or discuss what's displayed on your screen
+- Get AI analysis of what's shown in your screenshots during debugging
+- Ask questions about visual content (errors, terminal output, UI state) in context
+- Troubleshoot issues by providing visual evidence to the agent
+- Document or discuss what's displayed on your screen to the agent for better assistance
 
 ## Example Interaction
 
@@ -72,13 +118,20 @@ Copilot:
 4. Describes the errors and their context
 ```
 
+If no screenshot is found in the designated directory, the skill will state this clearly in its response.
+
 ## Important Notes
 
-- The skill automatically detects your operating system and environment (Windows, WSL, Linux, or macOS)
-- It accesses the appropriate screenshot directory for your platform without requiring manual configuration
-- For WSL, it correctly resolves Windows user paths via the `/mnt/c/` mount point
-- For macOS, it detects your system's configured screenshot storage location
-- For Linux, it checks standard screenshot directories (`~/Pictures/Screenshots`, `~/.local/share/screenshots`, etc.)
-- File modification times are used to determine the "latest" screenshot
+- The skill **first detects the platform** (Windows, macOS, or Linux/WSL), then executes the appropriate platform-specific workflow
+- **Supported formats**: PNG, JPEG, and GIF (the most commonly used formats across all OS platforms)
+- **Time-based filtering**: Only considers screenshots modified within the **last 2 minutes** to ensure recent captures
+- **Clipboard Fallback**: If no recent file is found in the filesystem, the skill automatically checks the system clipboard for an image:
+  - **Windows**: Uses `Get-ClipboardImage` (available on Windows 10+)
+  - **macOS**: Uses `pbpaste` command
+  - **Linux/WSL**: Uses `xclip` or `xsel` (if installed)
+- For **WSL**: Attempts to access Windows screenshot directories through the `/mnt/c/` mount point, with fallback to native Linux locations
+- For **macOS**: Checks configured default locations (Documents and Desktop) in priority order
+- For **Windows**: Uses the standard user Pictures\Screenshots directory
+- If no screenshot is found in the filesystem or clipboard, the skill will state this clearly in its response
 - The analysis respects your current session context when answering questions
 - **Autonomous execution**: This skill executes all multi-step platform detection and directory navigation steps automatically without asking for permission - this is intentional behavior designed for skill workflows
