@@ -1,5 +1,5 @@
 ---
-name: read-docs
+name: cel.read-docs
 description: Reads all markdown documentation files in the current directory and subdirectories, including referenced diagrams and images, providing context and a simple summary for the user about the local project or environment.
 ---
 

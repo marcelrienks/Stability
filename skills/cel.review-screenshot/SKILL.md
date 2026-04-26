@@ -1,5 +1,5 @@
 ---
-name: review-screenshot
+name: cel.review-screenshot
 description: Analyzes the latest screenshot from the Windows Screenshots directory (accessible via WSL) and answers questions about it in the context of the current session.
 ---
 
