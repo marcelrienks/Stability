@@ -1,67 +1,56 @@
 ---
 name: cel.read-docs
-description: Reads all markdown documentation files in the current directory and subdirectories, including referenced diagrams and images, providing context and a simple summary for the user about the local project or environment.
+description: Analyzes project documentation to build and persist a high-utility context map, preventing redundant reading in future sessions.
 ---
 
-# Read Docs
+# Read and Persist Project Context
 
-This skill performs a complete read of all markdown and referenced documentation for the purpose of loading and understanding project context.
+This skill performs a complete analysis of project documentation, distilling it into a persistent context file that the agent reuses to maintain state across interactions.
 
 ## Workflow Steps
 
-This skill executes the following steps in order:
+### 1. Check for Existing Context
+Before scanning, search the root directory for `.cel/PROJECT_CONTEXT.md`.
+- If found: Read this file immediately to establish baseline context.
+- If missing or outdated: Proceed to full scan.
 
-### 1. Search for root readme
-Search the root working directory for a readme file in common formats:
-- readme.md (most common)
-- readme.txt
-- README.md, README.txt (case variations)
-- Other readme variants (readme.markdown, etc.)
+### 2. Deep Ingestion (Recursive Search)
+Search the root and all subdirectories for:
+- **Primary:** `README.md` (and common variants like `.txt` or `.markdown`).
+- **Secondary:** All `.md` files throughout the directory tree.
+- **Linked Assets:** Only follow links to diagrams (`.mmd`, `.svg`), images, or referenced `.txt` files.
 
-### 2. Search for all markdown files
-Search across the root working directory and all subdirectories for all .md (markdown) files.
-Compile a list of all markdown documents, with the readme at the top of the list.
+### 3. Context Distillation (Intelligence Phase)
+Instead of just holding raw text, process the findings into the following categories:
+- **Project Purpose:** The "What" and "Why" of the codebase.
+- **Architecture & Tech Stack:** Identified languages, frameworks, and structural patterns.
+- **Key Workflows:** Critical paths or logic flows found in diagrams and docs.
+- **Documentation Map:** A directory of where specific information lives (e.g., "API specs found in /docs/api").
 
-### 3. Read all markdown documents
-Iterate through each markdown file from the list one by one, and read the contents into context.
-For each markdown file:
-- Read the full content including any embedded code blocks (especially mermaid diagrams)
-- Identify and follow any reference links to non-markdown files within the project, such as:
-  - Diagram files (.mmd, .mermaid, .svg, .png, .jpg for diagrams)
-  - Image files referenced in the documentation
-  - Other document formats explicitly linked (e.g., .txt, .pdf references)
-- Read these referenced files for extended context
-- Do NOT read arbitrary text files that are not referenced from documentation
+### 4. Persistence (Writing Memory)
+Generate or update a hidden file at `.cel/PROJECT_CONTEXT.md`. 
+- Format this file as a "Technical Brief" optimized for LLM consumption.
+- Include a timestamp of the last "Deep Read."
+- **Note:** This file serves as the agent's "state" for future requests.
 
-### 4. Provide Summary
-Once all documents have been read, summarize all aspects of the full context into one simple and concise summary, and output this formatted nicely for the user.
+### 5. Simple Output
+Provide the user with a concise 2-3 sentence confirmation of the project's nature and a notification that the project context has been persisted for improved performance.
 
 ## How to Use This Skill
 
-### Option 1: Using the Slash Command
+### Option 1: Initial Ingest
 ```
 /read docs
 ```
 
-### Option 2: Calling as a Named Skill
+### Option 2: Refresh Memory (Use when docs change)
 ```
-skill: "read docs"
+skill: "read docs" force_refresh: true
 ```
-
-## When to Use This Skill
-
-Use the read docs skill when you need to:
-- Build an initial context of the project
-- The user asks you to read, understand, explore, summarise, explain, or build context of this project
 
 ## Important Notes
 
-- **Readme search**: Look for readme files in common formats (md, txt, markdown) but prioritize .md
-- **Markdown focus**: Primary document search targets only markdown (.md) files
-- **Follow references only**: Read non-markdown files ONLY if they are explicitly referenced/linked from markdown documents
-- **Include diagrams**: Pay special attention to mermaid diagrams (embedded or linked) and other visual documentation
-- **Scope limitation**: Do NOT read arbitrary text files, code files, or configuration files unless referenced from documentation
-- **Context only**: Do NOT review the quality, accuracy, or value of the documents - ONLY read contents for building context
-- **Concise summary**: Output should be no more than 2-3 sentences with a very high level overview of the project
-- **Autonomous execution**: This skill executes all steps automatically without asking for permission - this is intentional behavior to enable efficient multi-step documentation reading workflows across subdirectories
-
+- **Efficiency First**: The goal is to move from "Reading" to "Knowing." Avoid re-reading raw files if the `PROJECT_CONTEXT.md` is sufficient for the user's query.
+- **No Code Bloat**: Do NOT read source code or config files unless they are explicitly linked as documentation.
+- **Silent Update**: The creation of the `.cel/` directory and context file should be handled automatically as part of the skill execution.
+- **Mermaid Support**: Ensure all mermaid diagrams are interpreted into the "Key Workflows" section of the persistent context.
