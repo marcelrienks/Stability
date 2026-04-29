@@ -1,6 +1,6 @@
 ---
 name: cel.simplify-docs
-description: Analyzes all markdown documentation files in a project for duplication, redundancy, inconsistency, contradictions, and verbosity, then simplifies and consolidates docs while preserving key value. Follows a 4-fold workflow: analyze, plan, confirmation, and implement.
+description: Audit and simplify project documentation by consolidating redundancy and eliminating duplicates while preserving essential information.
 ---
 
 # Simplify Docs
