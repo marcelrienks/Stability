@@ -10,7 +10,7 @@ This skill performs a complete analysis of project documentation, distilling it 
 ## Workflow Steps
 
 ### 1. Check for Existing Context
-Before scanning, search the root directory for `.cel/PROJECT_CONTEXT.md`.
+Before scanning, search the root directory for `.cel/context.md`.
 - If found: Read this file immediately to establish baseline context.
 - If missing or outdated: Proceed to full scan.
 
@@ -28,7 +28,7 @@ Instead of just holding raw text, process the findings into the following catego
 - **Documentation Map:** A directory of where specific information lives (e.g., "API specs found in /docs/api").
 
 ### 4. Persistence (Writing Memory)
-Generate or update a hidden file at `.cel/PROJECT_CONTEXT.md`. 
+Generate or update a hidden file at `.cel/context.md`. 
 - Format this file as a "Technical Brief" optimized for LLM consumption.
 - Include a timestamp of the last "Deep Read."
 - **Note:** This file serves as the agent's "state" for future requests.
@@ -50,7 +50,7 @@ skill: "read docs" force_refresh: true
 
 ## Important Notes
 
-- **Efficiency First**: The goal is to move from "Reading" to "Knowing." Avoid re-reading raw files if the `PROJECT_CONTEXT.md` is sufficient for the user's query.
+- **Efficiency First**: The goal is to move from "Reading" to "Knowing." Avoid re-reading raw files if the `context.md` is sufficient for the user's query.
 - **No Code Bloat**: Do NOT read source code or config files unless they are explicitly linked as documentation.
 - **Silent Update**: The creation of the `.cel/` directory and context file should be handled automatically as part of the skill execution.
 - **Mermaid Support**: Ensure all mermaid diagrams are interpreted into the "Key Workflows" section of the persistent context.

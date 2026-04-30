@@ -64,8 +64,8 @@ Based on the analysis, the skill creates a detailed consolidation and simplifica
 2. **Eliminate Duplicates**: Flag redundant content for removal
 3. **Resolve Contradictions**: Recommend authoritative versions
 4. **Propose File Structure**: Suggest simplified file organization
-5. **Define Naming**: Recommend single-word file names in README format (all caps):
-   - Examples: README.md, SETUP.md, INSTALL.md, GUIDE.md, API.md, CONFIG.md, FAQ.md, TROUBLESHOOT.md
+5. **Define Naming**: Recommend single-word file names in lowercase format (README.md as exception for legacy consistency):
+   - Examples: README.md, setup.md, install.md, guide.md, api.md, config.md, faq.md, troubleshoot.md
 6. **Create Execution Steps**: Detail specific actions (consolidations, deletions, rewrites)
 7. **Estimate Impact**: Show content reduction and quality improvements
 
@@ -82,7 +82,7 @@ The skill presents the plan to you for review and approval:
 Execute the approved consolidation and simplification plan:
 
 1. **Create New Files**: Generate consolidated markdown files with unified content
-2. **Apply Naming**: Rename files to single-word, all-caps format
+2. **Apply Naming**: Rename files to single-word, lowercase format
 3. **Preserve Value**: Ensure all critical information is retained
 4. **Remove Obsolete**: Delete redundant or superseded files
 5. **Update Cross-References**: Fix any broken links or references
@@ -91,21 +91,21 @@ Execute the approved consolidation and simplification plan:
 
 ## Documentation File Naming Convention
 
-All simplified documentation files should follow the single-word, all-caps README format:
+All simplified documentation files should follow the single-word, lowercase format (with README.md as the exception for legacy consistency):
 
 **Standard Files:**
 - `README.md` - Project overview and quick start
-- `SETUP.md` - Installation and environment setup
-- `INSTALL.md` - Installation instructions
-- `GUIDE.md` - Comprehensive user guide
-- `TUTORIAL.md` - Step-by-step tutorials
-- `API.md` - API documentation
-- `CONFIG.md` - Configuration reference
-- `FAQ.md` - Frequently asked questions
-- `TROUBLESHOOT.md` - Troubleshooting and common issues
-- `CONTRIBUTING.md` - Contribution guidelines
-- `LICENSE.md` - License information
-- `CHANGELOG.md` - Version history and changes
+- `setup.md` - Installation and environment setup
+- `install.md` - Installation instructions
+- `guide.md` - Comprehensive user guide
+- `tutorial.md` - Step-by-step tutorials
+- `api.md` - API documentation
+- `config.md` - Configuration reference
+- `faq.md` - Frequently asked questions
+- `troubleshoot.md` - Troubleshooting and common issues
+- `contributing.md` - Contribution guidelines
+- `license.md` - License information
+- `changelog.md` - Version history and changes
 
 ## When to Use This Skill
 
@@ -135,10 +135,10 @@ Copilot:
 - The skill analyzes **all** markdown files in the project's documentation directory
 - **Phase 3 (Confirmation)** is mandatory - no changes are made without explicit approval
 - All critical information is preserved during consolidation
-- Single-word file names (all caps) follow standard README documentation conventions
+- Single-word file names in lowercase follow consistent documentation conventions
 - The skill maintains version control awareness - changes are isolated and can be reviewed
 - Broken links and cross-references are automatically updated
-- **File Naming**: ONLY single-word names in all-caps (e.g., README.md, not GETTING_STARTED.md)
+- **File Naming**: ONLY single-word names in lowercase (e.g., setup.md, not getting_started.md); README.md is the exception for legacy consistency
 - The skill provides a detailed before/after summary showing consolidation benefits
 - Redundant and duplicate files are flagged for removal, not archived
 
