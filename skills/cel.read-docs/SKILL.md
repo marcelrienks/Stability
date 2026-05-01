@@ -10,12 +10,12 @@ This skill performs a complete analysis of project documentation, distilling it 
 ## Workflow Steps
 
 ### 1. Check for Existing Context
-Before scanning, check for `.cel/context.md`.
-- If missing: Proceed to full scan.
-- If exists: Compare stored doc hashes against current `.md` files.
-  - If `refresh` argument passed: Skip hash check, force full rescan.
-  - If hashes match: Read context, skip rescan.
-  - If hashes differ: Proceed to full scan (docs updated).
+
+1. If `.cel/context.md` missing → **proceed to Step 2** (full scan).
+2. If exists:
+   - `refresh` arg passed? → **Skip hash check, proceed to Step 2** (forced rescan).
+   - Hashes match current docs? → **HALT. Read context file only (Step 5 cache-hit output). Done.**
+   - Hashes differ? → **Proceed to Step 2** (docs updated, full scan).
 
 ### 2. Deep Ingestion (Recursive Search)
 Search the root and all subdirectories for:
@@ -38,8 +38,18 @@ Generate or update a hidden file at `.cel/context.md`.
 - Store MD5 hashes of all scanned `.md` files (for future change detection).
 - **Note:** This file serves as the agent's "state" for future requests.
 
-### 5. Simple Output
-Provide the user with a concise 2-3 sentence confirmation of the project's nature and a notification that the project context has been persisted for improved performance.
+### 5. Simple Output (Conditional)
+
+**Cache Hit** (hashes match, no rescan):
+Confirm context loaded from cache. Example: "Project context loaded from cache (last read: [DATE]). Ready."
+
+**Cache Miss or Docs Changed** (rescan performed):
+Confirm new write. Example: "Project analyzed. Context persisted with hashes. Ready."
+
+**Refresh** (forced rescan via `refresh` arg):
+Confirm override. Example: "Forced refresh: project re-scanned, context updated. Ready."
+
+All outputs: concise 2-3 sentences confirming project nature and cache/scan status.
 
 ## How to Use This Skill
 
