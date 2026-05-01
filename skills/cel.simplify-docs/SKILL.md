@@ -74,9 +74,9 @@ The skill presents the plan to you for review and approval:
 
 1. **Display Plan**: Show all proposed changes
 2. **Highlight Decisions**: Explain key consolidation and elimination choices
-3. **Request Approval**: Ask for confirmation before proceeding
-4. **Address Concerns**: Accept feedback and refine the plan if needed
-5. **Finalize**: Once approved, proceed to implementation
+3. **Request Approval**: Present the plan summary. Respond with "Proceed", "Refine [specific concern]", or propose changes
+4. **Address Concerns**: Accept feedback and adjust the plan if needed
+5. **Finalize**: Once you approve, proceed to implementation
 
 ### Phase 4: Implement
 Execute the approved consolidation and simplification plan:

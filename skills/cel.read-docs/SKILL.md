@@ -1,6 +1,6 @@
 ---
 name: cel.read-docs
-description: Analyzes project documentation to build and persist a high-utility context map, preventing redundant reading in future sessions.
+description: Usage: /cel.read-docs [refresh] Analyse docs and persist a context map, preventing redundant reading.
 ---
 
 # Read and Persist Project Context
@@ -10,15 +10,19 @@ This skill performs a complete analysis of project documentation, distilling it 
 ## Workflow Steps
 
 ### 1. Check for Existing Context
-Before scanning, search the root directory for `.cel/context.md`.
-- If found: Read this file immediately to establish baseline context.
-- If missing or outdated: Proceed to full scan.
+Before scanning, check for `.cel/context.md`.
+- If missing: Proceed to full scan.
+- If exists: Compare stored doc hashes against current `.md` files.
+  - If `refresh` argument passed: Skip hash check, force full rescan.
+  - If hashes match: Read context, skip rescan.
+  - If hashes differ: Proceed to full scan (docs updated).
 
 ### 2. Deep Ingestion (Recursive Search)
 Search the root and all subdirectories for:
 - **Primary:** `README.md` (and common variants like `.txt` or `.markdown`).
 - **Secondary:** All `.md` files throughout the directory tree.
 - **Linked Assets:** Only follow links to diagrams (`.mmd`, `.svg`), images, or referenced `.txt` files.
+- **Exclusions:** Dot-prefixed directories (`.specify`, `.cel`, `.github`), `specs/` directory, and `node_modules/`
 
 ### 3. Context Distillation (Intelligence Phase)
 Instead of just holding raw text, process the findings into the following categories:
@@ -31,6 +35,7 @@ Instead of just holding raw text, process the findings into the following catego
 Generate or update a hidden file at `.cel/context.md`. 
 - Format this file as a "Technical Brief" optimized for LLM consumption.
 - Include a timestamp of the last "Deep Read."
+- Store MD5 hashes of all scanned `.md` files (for future change detection).
 - **Note:** This file serves as the agent's "state" for future requests.
 
 ### 5. Simple Output
@@ -40,17 +45,26 @@ Provide the user with a concise 2-3 sentence confirmation of the project's natur
 
 ### Option 1: Initial Ingest
 ```
-/read docs
+/cel.read-docs
 ```
 
-### Option 2: Refresh Memory (Use when docs change)
+### Option 2: Auto-Smart (Default)
+Context loaded if hashes match docs. Auto-rescan if docs changed.
 ```
-skill: "read docs" force_refresh: true
+/cel.read-docs
+```
+
+### Option 3: Force Refresh
+Override hash check, always rescan and update context.
+```
+/cel.read-docs refresh
 ```
 
 ## Important Notes
 
-- **Efficiency First**: The goal is to move from "Reading" to "Knowing." Avoid re-reading raw files if the `context.md` is sufficient for the user's query.
-- **No Code Bloat**: Do NOT read source code or config files unless they are explicitly linked as documentation.
-- **Silent Update**: The creation of the `.cel/` directory and context file should be handled automatically as part of the skill execution.
-- **Mermaid Support**: Ensure all mermaid diagrams are interpreted into the "Key Workflows" section of the persistent context.
+- **Efficiency First**: Goal is move "Reading" → "Knowing." Reuse cached context if hash match.
+- **Auto-Detection**: Hash check automatic. If docs change, rescan triggered without manual refresh.
+- **Force Override**: Use `/cel.read-docs refresh` to skip hash check and force full rescan (useful after major doc restructure).
+- **No Code Bloat**: Read docs only, not source code (unless explicitly linked).
+- **Silent Update**: `.cel/` directory and context file created automatically.
+- **Mermaid Support**: Interpret diagrams into "Key Workflows" section of persistent context.

@@ -36,14 +36,9 @@ Execute `git pull origin <current-branch>` to fetch and merge the latest changes
 If merge conflicts occur during the pull:
 - Use `git status` to identify conflicted files
 - For each conflicted file, review the conflict markers to understand the conflict
-- Resolve conflicts by choosing the appropriate version or manually merging the changes
+- Resolve conflicts: prefer remote changes (assume authoritative); if both are equally valid, merge manually to preserve both
 - Use `git add <file>` to mark conflicts as resolved
 - Complete the merge with `git commit` (no message needed for merge commits)
-
-For merge conflict resolution, prefer keeping changes that:
-- Contain the most recent logic or data
-- Don't duplicate functionality
-- Are compatible with the remote version
 
 ### 5. Push to Remote
 Once the merge is complete, execute `git push origin <current-branch>` to push the synchronized changes to the remote repository.
