@@ -95,7 +95,7 @@ for skill_dir in "$SKILLS_SOURCE_DIR"/*/; do
   if [ -d "$skill_dir" ]; then
     skill_name=$(basename "$skill_dir")
     echo "  → Copying $skill_name"
-    cp -r "$skill_dir" "$TARGET_DIR/"
+    cp -r "${skill_dir%/}" "$TARGET_DIR/"
   fi
 done
 
