@@ -64,8 +64,8 @@ Based on the analysis, the skill creates a detailed consolidation and simplifica
 2. **Eliminate Duplicates**: Flag redundant content for removal
 3. **Resolve Contradictions**: Recommend authoritative versions
 4. **Propose File Structure**: Suggest simplified file organization
-5. **Define Naming**: Recommend single-word file names in lowercase format (README.md as exception for legacy consistency):
-   - Examples: README.md, setup.md, install.md, guide.md, api.md, config.md, faq.md, troubleshoot.md
+5. **Define Naming**: Recommend single-word file names in lowercase format:
+   - Examples: readme.md, setup.md, install.md, guide.md, api.md, config.md, faq.md, troubleshoot.md
 6. **Create Execution Steps**: Detail specific actions (consolidations, deletions, rewrites)
 7. **Estimate Impact**: Show content reduction and quality improvements
 
@@ -91,10 +91,10 @@ Execute the approved consolidation and simplification plan:
 
 ## Documentation File Naming Convention
 
-All simplified documentation files should follow the single-word, lowercase format (with README.md as the exception for legacy consistency):
+All simplified documentation files should follow the single-word, lowercase format:
 
 **Standard Files:**
-- `README.md` - Project overview and quick start
+- `readme.md` - Project overview and quick start
 - `setup.md` - Installation and environment setup
 - `install.md` - Installation instructions
 - `guide.md` - Comprehensive user guide
@@ -138,7 +138,7 @@ Copilot:
 - Single-word file names in lowercase follow consistent documentation conventions
 - The skill maintains version control awareness - changes are isolated and can be reviewed
 - Broken links and cross-references are automatically updated
-- **File Naming**: ONLY single-word names in lowercase (e.g., setup.md, not getting_started.md); README.md is the exception for legacy consistency
+- **File Naming**: ONLY single-word names in lowercase (e.g., setup.md, not getting_started.md); all files including readme.md must be lowercase
 - The skill provides a detailed before/after summary showing consolidation benefits
 - Redundant and duplicate files are flagged for removal, not archived
 
