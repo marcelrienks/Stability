@@ -1,6 +1,6 @@
 ---
-name: cel.read-docs
-description: "Usage: /cel.read-docs [refresh] Analyse docs and persist a context map, preventing redundant reading."
+name: cel.docs.read
+description: "Usage: /cel.docs.read [refresh] Analyse docs and persist a context map, preventing redundant reading."
 ---
 
 # Read and Persist Project Context

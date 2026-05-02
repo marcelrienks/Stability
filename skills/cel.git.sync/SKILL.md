@@ -1,5 +1,5 @@
 ---
-name: cel.git-sync
+name: cel.git.sync
 description: Automates git workflow with staged changes, intelligent commit messages, pull with merge conflict resolution, and push to remote. Use this skill when you need to perform a complete git synchronization workflow.
 ---
 
