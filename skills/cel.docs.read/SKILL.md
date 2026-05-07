@@ -20,9 +20,14 @@ This skill performs a complete analysis of project documentation, distilling it 
 ### 2. Deep Ingestion (Recursive Search)
 Search the root and all subdirectories for:
 - **Primary:** `README.md` (and common variants like `.txt` or `.markdown`).
-- **Secondary:** All `.md` files throughout the directory tree.
+- **Secondary:** All `.md` files throughout the directory tree, including all subdirectories.
 - **Linked Assets:** Only follow links to diagrams (`.mmd`, `.svg`), images, or referenced `.txt` files.
-- **Exclusions:** Dot-prefixed directories (`.specify`, `.cel`, `.github`), `specs/` directory, and `node_modules/`
+- **Exclusions (directory or file name matches):**
+  - Dot-prefixed directories (`.specify`, `.cel`, `.github`)
+  - `specs/`, `node_modules/`
+  - Any directory or file whose name contains `archive`, `original`, `orig`, `backup`, or `bak` (case-insensitive, e.g. `docs_backup/`, `README.orig.md`)
+  - Any directory associated with addons, plugins, or external libraries (e.g. `addons/`, `plugins/`, `vendor/`, `third_party/`, `external/`, `lib/`, `libs/`)
+- **Project files only:** Only read `.md` files that are authored as part of this project. Do **not** read documentation bundled with dependencies, packages, or any externally sourced library.
 
 ### 3. Context Distillation (Intelligence Phase)
 Instead of just holding raw text, process the findings into the following categories:
