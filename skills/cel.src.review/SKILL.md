@@ -1,6 +1,6 @@
 ---
 name: cel.src.review
-description: "Review source code documentation for fallacies, contradictions, and inconsistencies. Usage: `/cel.src.review [auto]` - use [auto] to skip confirmation and auto-implement best solutions."
+description: "Review source code documentation for fallacies, contradictions, and inconsistencies. Usage: `/cel.src.review [auto]`"
 ---
 
 # Source Code Review
@@ -62,45 +62,24 @@ Identifies inconsistencies in naming, format, terminology, and structure:
 
 ## How to Use This Skill
 
-### Option 1: Interactive Mode (Default)
+### Option 1: Slash Command
 ```
-/cel.src.review
-```
-
-Runs all three analyses with interactive prompts for each issue found. For each issue:
-- Issue is stated with location and context
-- Options are presented (keep as-is, fix option A, fix option B, etc.)
-- You respond with your choice
-- Code is updated and analysis continues
-
-### Option 2: Auto-Fix Mode
-```
-/cel.src.review auto
+/cel.src.review                        # All phases, interactive mode (default)
+/cel.src.review auto                   # All phases, auto-fix mode
+/cel.src.review fallacies              # Fallacy analysis only, interactive
+/cel.src.review contradictions         # Contradiction analysis only, interactive
+/cel.src.review inconsistencies        # Inconsistency analysis only, interactive
+/cel.src.review fallacies auto         # Fallacy analysis only, auto-fix
+/cel.src.review contradictions auto    # Contradiction analysis only, auto-fix
+/cel.src.review inconsistencies auto   # Inconsistency analysis only, auto-fix
 ```
 
-Runs all three analyses automatically without user feedback. For each issue found:
-- Issue is identified
-- Best available solution is automatically implemented
-- No confirmation needed
-- Summary of all changes provided at end
-
-### Option 3: Specific Phase Only (Interactive)
+### Option 2: Named Skill
 ```
-/cel.src.review fallacies
-/cel.src.review contradictions
-/cel.src.review inconsistencies
+skill: "cel.src.review"
+skill: "cel.src.review auto"
+skill: "cel.src.review fallacies"
 ```
-
-Runs only the specified analysis phase interactively.
-
-### Option 4: Specific Phase Auto-Fix
-```
-/cel.src.review fallacies auto
-/cel.src.review contradictions auto
-/cel.src.review inconsistencies auto
-```
-
-Runs only the specified analysis phase with automatic fixes.
 
 ## Workflow Example
 

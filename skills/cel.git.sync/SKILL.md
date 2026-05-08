@@ -1,6 +1,6 @@
 ---
 name: cel.git.sync
-description: Automates git workflow with staged changes, intelligent commit messages, pull with merge conflict resolution, and push to remote. Use this skill when you need to perform a complete git synchronization workflow.
+description: "Automates git workflow with staged changes, intelligent commit messages, pull with merge conflict resolution, and push to remote. Usage: `/cel.git.sync`"
 ---
 
 # Git Sync
@@ -45,14 +45,14 @@ Once the merge is complete, execute `git push origin <current-branch>` to push t
 
 ## How to Use This Skill
 
-### Option 1: Using the Slash Command
+### Option 1: Slash Command
 ```
-/git sync
+/cel.git.sync
 ```
 
-### Option 2: Calling as a Named Skill
+### Option 2: Named Skill
 ```
-skill: "git sync"
+skill: "cel.git.sync"
 ```
 
 ## When to Use This Skill
@@ -79,5 +79,5 @@ Copilot:
 - The skill requires an active git repository in the current working directory
 - The user must have appropriate permissions on the remote repository to push changes
 - The current branch must be tracking a remote branch for pull and push to work correctly
-- This skill attempts to execute all steps autonomously without asking for permission. However, during complex conflict resolution, manual user intervention may be required for resolution decisions
+- This skill executes steps autonomously except during complex merge conflicts, which may require manual intervention for resolution decisions
 - The skill will automatically handle multi-step operations across different git states and directories without interruption

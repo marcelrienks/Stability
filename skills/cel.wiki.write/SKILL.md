@@ -1,6 +1,6 @@
 ---
 name: cel.wiki.write
-description: "Generate and update project documentation by scanning codebase and existing context. Usage: `/cel.wiki.write [overwrite]` - use [overwrite] to replace all existing documents with newly generated ones."
+description: "Generate and update project documentation by scanning codebase and existing context. Usage: `/cel.wiki.write [overwrite]`"
 ---
 
 # Write Wiki Documentation
@@ -20,19 +20,17 @@ When you invoke this skill, it will:
 
 ## How to Use This Skill
 
-### Option 1: Generate/Update Documentation (Default)
+### Option 1: Slash Command
 ```
-/cel.wiki.write
-```
-
-Analyzes the codebase and generates new documentation files. If files exist, updates them with new findings and context. Preserves existing documentation structure while adding missing pieces.
-
-### Option 2: Overwrite All Documentation
-```
-/cel.wiki.write overwrite
+/cel.wiki.write           # Generate/update documentation, preserves existing files
+/cel.wiki.write overwrite # Overwrite all documentation from scratch
 ```
 
-Performs a complete scan and regenerates ALL documentation from scratch, replacing existing documentation with newly generated content. Use this when you want a fresh baseline of documentation.
+### Option 2: Named Skill
+```
+skill: "cel.wiki.write"
+skill: "cel.wiki.write overwrite"
+```
 
 ## Workflow
 
@@ -143,11 +141,12 @@ Additional files generated as needed:
 - Delete superseded files
 - Create fresh structure based on current codebase analysis
 
-### Phase 6: Simplify and Cleanup
-1. **Invoke cel.wiki.simplify**: Automatically run with `force` flag
+### Phase 6: Optional Simplification
+Optionally consolidate and simplify the generated documentation:
+1. **Invoke cel.wiki.simplify**: Run with `force` flag to auto-consolidate redundancy (optional)
 2. **Auto-cleanup**: Consolidate redundancy and ensure consistency
-3. **No confirmation needed**: force flag bypasses manual confirmation
-4. **Final structure**: Present cleaned-up and simplified wiki
+3. **No confirmation needed**: force flag bypasses manual confirmation if invoked
+4. **Final structure**: Simplified and finalized wiki (if simplification step is run)
 
 ## Documentation Generation Strategy
 
@@ -186,8 +185,8 @@ Use this skill when you want to:
 
 - **cel.wiki.init**: Called automatically to create wiki structure if needed
 - **cel.wiki.read**: Called to load existing context and understand project
-- **cel.wiki.simplify**: Called automatically with `force` flag to cleanup generated docs
-- **Intent**: Create the baseline documentation that cel.wiki.read and cel.wiki.simplify enhance
+- **cel.wiki.simplify**: Can be invoked after cel.wiki.write completes for further documentation consolidation (optional)
+- **Intent**: Generate baseline documentation that cel.wiki.read and cel.wiki.simplify can enhance
 
 ## Example Workflows
 

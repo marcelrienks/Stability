@@ -14,7 +14,7 @@ This skill performs a complete analysis of project documentation, distilling it 
 1. If `.cel/context.md` missing → **proceed to Step 2** (full scan).
 2. If exists:
    - `refresh` arg passed? → **Skip hash check, proceed to Step 2** (forced rescan).
-   - Hashes match current wiki? → **HALT. Read context file only (Step 5 cache-hit output). Done.**
+   - Hashes match all `.md` files in the `wiki/` directory? → **HALT. Read context file only (Step 5 cache-hit output). Done.**
    - Hashes differ? → **Proceed to Step 2** (wiki updated, full scan).
 
 ### 2. Deep Ingestion (Recursive Search)
@@ -59,21 +59,16 @@ All outputs: concise 2-3 sentences confirming project nature and cache/scan stat
 
 ## How to Use This Skill
 
-### Option 1: Initial Ingest
+### Option 1: Slash Command
 ```
-/cel.wiki.read
-```
-
-### Option 2: Auto-Smart (Default)
-Context loaded if hashes match wiki. Auto-rescan if wiki changed.
-```
-/cel.wiki.read
+/cel.wiki.read          # Default: load from cache if available, rescan if changed
+/cel.wiki.read refresh  # Force refresh: always rescan and update context
 ```
 
-### Option 3: Force Refresh
-Override hash check, always rescan and update context.
+### Option 2: Named Skill
 ```
-/cel.wiki.read refresh
+skill: "cel.wiki.read"
+skill: "cel.wiki.read refresh"
 ```
 
 ## Important Notes

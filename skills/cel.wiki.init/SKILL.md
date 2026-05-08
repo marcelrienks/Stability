@@ -1,6 +1,6 @@
 ---
 name: cel.wiki.init
-description: "Initialize and organize project wiki. Creates wiki/raw folder structure at project root, consolidates scattered wiki content, and uses cel.wiki.read to persist context."
+description: "Initialize and organize project wiki with wiki/raw folder structure at project root. Usage: `/cel.wiki.init`"
 ---
 
 # Initialize & Organize Project Documentation
@@ -80,9 +80,14 @@ After all files are organized:
 
 ## How to Use This Skill
 
-### Initial Setup
+### Option 1: Slash Command
 ```
 /cel.wiki.init
+```
+
+### Option 2: Named Skill
+```
+skill: "cel.wiki.init"
 ```
 
 This single command will:

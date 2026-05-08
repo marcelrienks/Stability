@@ -1,6 +1,6 @@
 ---
 name: cel.screen.read
-description: Analyzes the latest screenshot from the Windows Screenshots directory (accessible via WSL) and answers questions about it in the context of the current session.
+description: "Analyzes the latest screenshot and answers questions about it in the context of your current session. Usage: `/cel.screen.read`"
 ---
 
 # Review Screenshot
@@ -19,12 +19,12 @@ When you invoke this skill, it will:
 
 ## How to Use This Skill
 
-### Option 1: Using the Slash Command
+### Option 1: Slash Command
 ```
 /cel.screen.read
 ```
 
-### Option 2: Calling as a Named Skill
+### Option 2: Named Skill
 ```
 skill: "cel.screen.read"
 ```

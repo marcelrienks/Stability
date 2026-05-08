@@ -1,6 +1,6 @@
 ---
 name: cel.wiki.simplify
-description: "Audit and simplify project wiki by analyzing markdown files in the wiki directory, consolidating redundancy and eliminating duplicates while preserving essential information. Usage: `/cel.wiki.simplify [force]` - use [force] to skip confirmation and auto-implement best solutions."
+description: "Audit and simplify project wiki by consolidating redundancy and eliminating duplicates. Usage: `/cel.wiki.simplify [force]`"
 ---
 
 # Simplify Wiki
@@ -11,64 +11,55 @@ This skill provides a comprehensive wiki audit and simplification service. It re
 
 When you invoke this skill, it will:
 
-1. **Analyze** all markdown documentation files within the wiki directory (ONLY)
+1. **Analyze** all markdown documentation files within the wiki directory (not wiki/raw/) using full project context
 2. **Identify issues** including duplication, redundancy, inconsistency, contradictions, and excessive verbosity
 3. **Create a plan** for simplification and consolidation
 4. **Request confirmation** before making any changes
-5. **Implement** the improvements while preserving key value
+5. **Implement** the improvements while preserving all essential information
+
+**Note:** Analysis scope is the wiki directory only (modifications apply to wiki/ files), but the skill leverages full project context from the persisted context file (.cel/context.md) and the entire codebase to determine best solutions.
 
 ## How to Use This Skill
 
-### Option 1: Interactive Mode (Default)
+### Option 1: Slash Command
 ```
-/cel.wiki.simplify
-```
-
-Analyzes all markdown files in the wiki directory and creates a consolidation plan. Requires manual confirmation before implementing changes.
-
-### Option 2: Force Mode
-```
-/cel.wiki.simplify force
+/cel.wiki.simplify        # Interactive mode (default): requires confirmation before changes
+/cel.wiki.simplify force  # Force mode: auto-implements best solutions without confirmation
 ```
 
-Runs analysis and automatically implements the best solutions without requiring manual confirmation. Use this flag when you want automatic simplification without interactive approval (typically used after cel.wiki.write completes documentation generation).
-
-### Option 3: Calling as a Named Skill
+### Option 2: Named Skill
 ```
 skill: "cel.wiki.simplify"
 skill: "cel.wiki.simplify force"
 ```
-
-After invoking the skill, you can then ask questions or provide guidance about the wiki review, such as:
-- "Analyze my wiki directory"
-- "What redundancies do you see?"
-- "How would you consolidate these files?"
-- "Proceed with simplification"
 
 ## Workflow
 
 The skill executes a comprehensive 4-fold process:
 
 ### Phase 1: Analyze
-The skill performs a thorough audit of all markdown files in the wiki directory:
+The skill performs a thorough audit of all markdown files in the wiki directory (not wiki/raw/) while leveraging full project context:
 
-1. **Locate Documentation**: Find all `.md` files in the `wiki/` directory
-2. **Read Content**: Load and parse all markdown files, extracting:
+1. **Load Project Context**: 
+   - Read the persisted context file (.cel/context.md) if available
+   - Scan the codebase as needed to understand project structure, technologies, and patterns
+2. **Locate Documentation**: Find all `.md` files in the `wiki/` directory (excluding wiki/raw/)
+3. **Read Content**: Load and parse all markdown files, extracting:
    - File names and purposes
    - Headers and structure
    - Content and key information
    - Metadata and frontmatter (if present)
-3. **Identify Issues**: Analyze each file and across files for:
+4. **Identify Issues**: Analyze each file and across files for:
    - **Duplication**: Identical or near-identical content appearing in multiple files
    - **Redundancy**: Overlapping information that could be consolidated
    - **Inconsistency**: Conflicting information, terminology, or formatting
    - **Contradictions**: Direct conflicts between statements across files
    - **Verbosity**: Unnecessarily lengthy explanations that could be condensed
-4. **Map Relationships**: Identify connections between files and content
-5. **Assess Value**: Determine the key value each file brings to the documentation
+5. **Map Relationships**: Identify connections between files and content
+6. **Assess Value**: Determine the key value each file brings to the documentation
 
 ### Phase 2: Plan
-Based on the analysis, the skill creates a detailed consolidation and simplification plan:
+Based on the analysis (informed by full project context), the skill creates a detailed consolidation and simplification plan for wiki files:
 
 1. **Group Related Content**: Identify files that should be consolidated
 2. **Eliminate Duplicates**: Flag redundant content for removal
@@ -76,7 +67,7 @@ Based on the analysis, the skill creates a detailed consolidation and simplifica
 4. **Propose File Structure**: Suggest simplified file organization
 5. **Define Naming**: Recommend single-word file names in lowercase format:
    - Examples: readme.md, setup.md, install.md, guide.md, api.md, config.md, faq.md, troubleshoot.md
-6. **Create Execution Steps**: Detail specific actions (consolidations, deletions, rewrites)
+6. **Create Execution Steps**: Detail specific actions (consolidations, deletions, rewrites) for wiki/ files only
 7. **Estimate Impact**: Show content reduction and quality improvements
 
 ### Phase 3: Confirmation
@@ -89,13 +80,13 @@ The skill presents the plan to you for review and approval (unless `force` flag 
 5. **Finalize**: Once you approve (or if `force` flag is passed), proceed to implementation
 
 ### Phase 4: Implement
-Execute the approved consolidation and simplification plan:
+Execute the approved consolidation and simplification plan on wiki/ files:
 
-1. **Create New Files**: Generate consolidated markdown files with unified content
+1. **Create New Files**: Generate consolidated markdown files with unified content in wiki/
 2. **Apply Naming**: Rename files to single-word, lowercase format
 3. **Preserve Value**: Ensure all critical information is retained
-4. **Remove Obsolete**: Delete redundant or superseded files
-5. **Update Cross-References**: Fix any broken links or references
+4. **Remove Obsolete**: Delete redundant or superseded files from wiki/
+5. **Update Cross-References**: Fix any broken links or references within wiki/
 6. **Verify Structure**: Confirm the new documentation structure is complete
 7. **Generate Summary**: Provide a before/after comparison showing improvements
 
@@ -154,7 +145,8 @@ Copilot:
 
 ## Important Notes
 
-- The skill analyzes **all** markdown files in the `wiki/` directory ONLY
+- **Modification scope**: The skill modifies **only** markdown files in the `wiki/` directory (NOT wiki/raw/)
+- **Analysis scope**: Uses full project context (persisted context file and codebase) to inform analysis and solutions
 - **Phase 3 (Confirmation)** is mandatory by default - no changes are made without explicit approval
 - Use the `force` flag to skip Phase 3 and auto-implement the best solutions without confirmation
 - All critical information is preserved during consolidation
