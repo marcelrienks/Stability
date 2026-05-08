@@ -1,5 +1,5 @@
 ---
-name: cel.read-scr-sht
+name: cel.screen.read
 description: Analyzes the latest screenshot from the Windows Screenshots directory (accessible via WSL) and answers questions about it in the context of the current session.
 ---
 
@@ -21,12 +21,12 @@ When you invoke this skill, it will:
 
 ### Option 1: Using the Slash Command
 ```
-/cel.read-scr-sht
+/cel.screen.read
 ```
 
 ### Option 2: Calling as a Named Skill
 ```
-skill: "cel.read-scr-sht"
+skill: "cel.screen.read"
 ```
 
 After invoking the skill, you can then ask questions about the screenshot, such as:
@@ -63,7 +63,7 @@ The skill searches each location for images modified within the last 2 minutes. 
 This skill is designed to streamline debugging workflows when working with agents in the command line or VS Code:
 
 1. **Take a screenshot** during your development session when you encounter an issue, error, or unexpected behavior
-2. **Invoke the skill** with `/cel.read-scr-sht` while talking to the agent
+2. **Invoke the skill** with `/cel.screen.read` while talking to the agent
 3. **The agent analyzes** the visual output (errors, terminal state, UI, logs, etc.) in the context of your current debugging task
 4. **Get detailed insights** about what's happening, combining visual information with knowledge of your session activity
 5. **Accelerate troubleshooting** by having the agent understand both code-level context and visual debugging information
@@ -81,7 +81,7 @@ Use this skill when you want to:
 
 **Debugging an error:**
 ```
-User: /cel.read-scr-sht
+User: /cel.screen.read
 User: What error messages are visible?
 
 Copilot:
@@ -90,7 +90,7 @@ Locates the latest screenshot, analyzes it, identifies stack traces or error mes
 
 **Reviewing terminal output:**
 ```
-User: /cel.read-scr-sht
+User: /cel.screen.read
 User: Can you read the terminal output?
 
 Copilot:

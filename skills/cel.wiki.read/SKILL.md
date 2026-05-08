@@ -1,6 +1,6 @@
 ---
-name: cel.docs.read
-description: "Usage: /cel.docs.read [refresh] Analyse docs and persist a context map, preventing redundant reading."
+name: cel.wiki.read
+description: "Analyze wiki and persist a context map, preventing redundant reading. Usage: `/cel.wiki.read [refresh]`"
 ---
 
 # Read and Persist Project Context
@@ -14,8 +14,8 @@ This skill performs a complete analysis of project documentation, distilling it 
 1. If `.cel/context.md` missing → **proceed to Step 2** (full scan).
 2. If exists:
    - `refresh` arg passed? → **Skip hash check, proceed to Step 2** (forced rescan).
-   - Hashes match current docs? → **HALT. Read context file only (Step 5 cache-hit output). Done.**
-   - Hashes differ? → **Proceed to Step 2** (docs updated, full scan).
+   - Hashes match current wiki? → **HALT. Read context file only (Step 5 cache-hit output). Done.**
+   - Hashes differ? → **Proceed to Step 2** (wiki updated, full scan).
 
 ### 2. Deep Ingestion (Recursive Search)
 Search the root and all subdirectories for:
@@ -34,7 +34,7 @@ Instead of just holding raw text, process the findings into the following catego
 - **Project Purpose:** The "What" and "Why" of the codebase.
 - **Architecture & Tech Stack:** Identified languages, frameworks, and structural patterns.
 - **Key Workflows:** Critical paths or logic flows found in diagrams and docs.
-- **Documentation Map:** A directory of where specific information lives (e.g., "API specs found in /docs/api").
+- **Documentation Map:** A directory of where specific information lives (e.g., "API specs found in /wiki/api").
 
 ### 4. Persistence (Writing Memory)
 Generate or update a hidden file at `.cel/context.md`. 
@@ -61,26 +61,26 @@ All outputs: concise 2-3 sentences confirming project nature and cache/scan stat
 
 ### Option 1: Initial Ingest
 ```
-/cel.read-docs
+/cel.wiki.read
 ```
 
 ### Option 2: Auto-Smart (Default)
-Context loaded if hashes match docs. Auto-rescan if docs changed.
+Context loaded if hashes match wiki. Auto-rescan if wiki changed.
 ```
-/cel.read-docs
+/cel.wiki.read
 ```
 
 ### Option 3: Force Refresh
 Override hash check, always rescan and update context.
 ```
-/cel.read-docs refresh
+/cel.wiki.read refresh
 ```
 
 ## Important Notes
 
 - **Efficiency First**: Goal is move "Reading" → "Knowing." Reuse cached context if hash match.
-- **Auto-Detection**: Hash check automatic. If docs change, rescan triggered without manual refresh.
-- **Force Override**: Use `/cel.read-docs refresh` to skip hash check and force full rescan (useful after major doc restructure).
-- **No Code Bloat**: Read docs only, not source code (unless explicitly linked).
+- **Auto-Detection**: Hash check automatic. If wiki changes, rescan triggered without manual refresh.
+- **Force Override**: Use `/cel.wiki.read refresh` to skip hash check and force full rescan (useful after major wiki restructure).
+- **No Code Bloat**: Read wiki only, not source code (unless explicitly linked).
 - **Silent Update**: `.cel/` directory and context file created automatically.
 - **Mermaid Support**: Interpret diagrams into "Key Workflows" section of persistent context.

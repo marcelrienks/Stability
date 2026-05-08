@@ -79,6 +79,5 @@ Copilot:
 - The skill requires an active git repository in the current working directory
 - The user must have appropriate permissions on the remote repository to push changes
 - The current branch must be tracking a remote branch for pull and push to work correctly
-- During conflict resolution, manual review may be needed for complex conflicts
-- This skill executes all steps autonomously without asking for permission - this is intentional behavior designed for skill workflows
+- This skill attempts to execute all steps autonomously without asking for permission. However, during complex conflict resolution, manual user intervention may be required for resolution decisions
 - The skill will automatically handle multi-step operations across different git states and directories without interruption

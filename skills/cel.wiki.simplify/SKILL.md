@@ -1,17 +1,17 @@
 ---
-name: cel.simplify-docs
-description: Audit and simplify project documentation by consolidating redundancy and eliminating duplicates while preserving essential information.
+name: cel.wiki.simplify
+description: Audit and simplify project wiki by analyzing markdown files in the wiki directory, consolidating redundancy and eliminating duplicates while preserving essential information.
 ---
 
-# Simplify Docs
+# Simplify Wiki
 
-This skill provides a comprehensive documentation audit and simplification service. It reads and analyzes all markdown files within a project's documentation directory, identifies inefficiencies and inconsistencies, creates a consolidation and simplification plan, and executes the improvements while preserving all essential information.
+This skill provides a comprehensive wiki audit and simplification service. It reads and analyzes all markdown files within a project's wiki directory, identifies inefficiencies and inconsistencies, creates a consolidation and simplification plan, and executes the improvements while preserving all essential information.
 
 ## What This Skill Does
 
 When you invoke this skill, it will:
 
-1. **Analyze** all markdown documentation files in the project
+1. **Analyze** all markdown documentation files within the wiki directory (ONLY)
 2. **Identify issues** including duplication, redundancy, inconsistency, contradictions, and excessive verbosity
 3. **Create a plan** for simplification and consolidation
 4. **Request confirmation** before making any changes
@@ -21,16 +21,16 @@ When you invoke this skill, it will:
 
 ### Option 1: Using the Slash Command
 ```
-/cel.simplify-docs
+/cel.wiki.simplify
 ```
 
 ### Option 2: Calling as a Named Skill
 ```
-skill: "cel.simplify-docs"
+skill: "cel.wiki.simplify"
 ```
 
-After invoking the skill, you can then ask questions or provide guidance about the documentation review, such as:
-- "Analyze my docs directory"
+After invoking the skill, you can then ask questions or provide guidance about the wiki review, such as:
+- "Analyze my wiki directory"
 - "What redundancies do you see?"
 - "How would you consolidate these files?"
 - "Proceed with simplification"
@@ -40,9 +40,9 @@ After invoking the skill, you can then ask questions or provide guidance about t
 The skill executes a comprehensive 4-fold process:
 
 ### Phase 1: Analyze
-The skill performs a thorough audit of all markdown files in the project's `docs/` directory:
+The skill performs a thorough audit of all markdown files in the wiki directory:
 
-1. **Locate Documentation**: Find all `.md` files in the project's documentation directory
+1. **Locate Documentation**: Find all `.md` files in the `wiki/` directory
 2. **Read Content**: Load and parse all markdown files, extracting:
    - File names and purposes
    - Headers and structure
@@ -120,9 +120,9 @@ Use this skill when you want to:
 ## Example Workflow
 
 ```
-User: /cel.simplify-docs
+User: /cel.wiki.simplify
 Copilot:
-1. Analyzes all markdown files in the docs directory
+1. Analyzes all markdown files in the wiki directory
 2. Identifies duplication, redundancy, contradictions, and verbosity
 3. Creates a consolidation plan with specific file merges and simplifications
 4. Presents the plan for your review and confirmation
@@ -132,7 +132,7 @@ Copilot:
 
 ## Important Notes
 
-- The skill analyzes **all** markdown files in the project's documentation directory
+- The skill analyzes **all** markdown files in the `wiki/` directory ONLY
 - **Phase 3 (Confirmation)** is mandatory - no changes are made without explicit approval
 - All critical information is preserved during consolidation
 - Single-word file names in lowercase follow consistent documentation conventions
