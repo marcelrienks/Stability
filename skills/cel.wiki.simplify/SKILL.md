@@ -1,6 +1,6 @@
 ---
 name: cel.wiki.simplify
-description: Audit and simplify project wiki by analyzing markdown files in the wiki directory, consolidating redundancy and eliminating duplicates while preserving essential information.
+description: "Audit and simplify project wiki by analyzing markdown files in the wiki directory, consolidating redundancy and eliminating duplicates while preserving essential information. Usage: `/cel.wiki.simplify [force]` - use [force] to skip confirmation and auto-implement best solutions."
 ---
 
 # Simplify Wiki
@@ -19,14 +19,24 @@ When you invoke this skill, it will:
 
 ## How to Use This Skill
 
-### Option 1: Using the Slash Command
+### Option 1: Interactive Mode (Default)
 ```
 /cel.wiki.simplify
 ```
 
-### Option 2: Calling as a Named Skill
+Analyzes all markdown files in the wiki directory and creates a consolidation plan. Requires manual confirmation before implementing changes.
+
+### Option 2: Force Mode
+```
+/cel.wiki.simplify force
+```
+
+Runs analysis and automatically implements the best solutions without requiring manual confirmation. Use this flag when you want automatic simplification without interactive approval (typically used after cel.wiki.write completes documentation generation).
+
+### Option 3: Calling as a Named Skill
 ```
 skill: "cel.wiki.simplify"
+skill: "cel.wiki.simplify force"
 ```
 
 After invoking the skill, you can then ask questions or provide guidance about the wiki review, such as:
@@ -70,13 +80,13 @@ Based on the analysis, the skill creates a detailed consolidation and simplifica
 7. **Estimate Impact**: Show content reduction and quality improvements
 
 ### Phase 3: Confirmation
-The skill presents the plan to you for review and approval:
+The skill presents the plan to you for review and approval (unless `force` flag is used):
 
 1. **Display Plan**: Show all proposed changes
 2. **Highlight Decisions**: Explain key consolidation and elimination choices
-3. **Request Approval**: Present the plan summary. Respond with "Proceed", "Refine [specific concern]", or propose changes
-4. **Address Concerns**: Accept feedback and adjust the plan if needed
-5. **Finalize**: Once you approve, proceed to implementation
+3. **Request Approval**: Present the plan summary. Respond with "Proceed", "Refine [specific concern]", or propose changes (skipped if `force` flag is used)
+4. **Address Concerns**: Accept feedback and adjust the plan if needed (skipped if `force` flag is used)
+5. **Finalize**: Once you approve (or if `force` flag is passed), proceed to implementation
 
 ### Phase 4: Implement
 Execute the approved consolidation and simplification plan:
@@ -119,6 +129,7 @@ Use this skill when you want to:
 
 ## Example Workflow
 
+### Interactive Mode (Default)
 ```
 User: /cel.wiki.simplify
 Copilot:
@@ -130,10 +141,22 @@ Copilot:
 6. Reports on improvements and new documentation structure
 ```
 
+### Force Mode (Auto-Implement)
+```
+User: /cel.wiki.simplify force
+Copilot:
+1. Analyzes all markdown files in the wiki directory
+2. Identifies duplication, redundancy, contradictions, and verbosity
+3. Creates a consolidation plan with specific file merges and simplifications
+4. Auto-implements the best solutions without waiting for confirmation
+5. Reports on improvements and new documentation structure
+```
+
 ## Important Notes
 
 - The skill analyzes **all** markdown files in the `wiki/` directory ONLY
-- **Phase 3 (Confirmation)** is mandatory - no changes are made without explicit approval
+- **Phase 3 (Confirmation)** is mandatory by default - no changes are made without explicit approval
+- Use the `force` flag to skip Phase 3 and auto-implement the best solutions without confirmation
 - All critical information is preserved during consolidation
 - Single-word file names in lowercase follow consistent documentation conventions
 - The skill maintains version control awareness - changes are isolated and can be reviewed
@@ -141,4 +164,5 @@ Copilot:
 - **File Naming**: ONLY single-word names in lowercase (e.g., setup.md, not getting_started.md); all files including readme.md must be lowercase
 - The skill provides a detailed before/after summary showing consolidation benefits
 - Redundant and duplicate files are flagged for removal, not archived
+- **Force Mode**: Use `force` argument to auto-implement changes without requiring manual approval (useful when called by cel.wiki.write)
 
