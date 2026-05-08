@@ -97,6 +97,20 @@ esac
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SKILLS_SOURCE_DIR="$SCRIPT_DIR"
 
+# Safety check: prevent deploying to the source directory
+if [ "$TARGET_DIR" = "$SKILLS_SOURCE_DIR" ]; then
+  echo "Error: Cannot deploy to the source directory itself ($SKILLS_SOURCE_DIR)"
+  echo "This script should be run from the project root, not from the deployment target."
+  exit 1
+fi
+
+# Prevent deploying to a parent directory of the source
+if [[ "$SKILLS_SOURCE_DIR" == "$TARGET_DIR"* ]]; then
+  echo "Error: Target directory ($TARGET_DIR) conflicts with source location ($SKILLS_SOURCE_DIR)"
+  echo "This script should be run from the project root, not from the deployment target."
+  exit 1
+fi
+
 if [ ! -d "$SKILLS_SOURCE_DIR" ]; then
   echo "Error: Skills directory not found at $SKILLS_SOURCE_DIR"
   exit 1
