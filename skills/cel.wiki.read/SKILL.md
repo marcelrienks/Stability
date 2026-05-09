@@ -41,7 +41,10 @@ Generate or update a hidden file at `.cel/context.md`.
 - **File naming rule:** The output file name MUST always be `context.md` (all lowercase). No other casing (e.g. `Context.md`, `CONTEXT.MD`) is permitted.
 - Format this file as a "Technical Brief" optimized for LLM consumption.
 - Include a timestamp of the last "Deep Read."
-- Store MD5 hashes of all scanned `.md` files (for future change detection).
+- Store MD5 hashes of:
+  - All scanned `.md` files in the `wiki/` directory (excluding `wiki/raw/`)
+  - The root `README.md` file
+  - Use these hashes for future change detection (for future change detection).
 - **Note:** This file serves as the agent's "state" for future requests.
 
 ### 5. Simple Output (Conditional)

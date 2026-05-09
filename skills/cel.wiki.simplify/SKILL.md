@@ -94,8 +94,7 @@ Execute the approved consolidation and simplification plan on wiki/ files:
 
 All simplified documentation files should follow the single-word, lowercase format:
 
-**Standard Files:**
-- `readme.md` - Project overview and quick start
+**Standard Files (in wiki/ only):**
 - `setup.md` - Installation and environment setup
 - `install.md` - Installation instructions
 - `guide.md` - Comprehensive user guide
@@ -107,6 +106,8 @@ All simplified documentation files should follow the single-word, lowercase form
 - `contributing.md` - Contribution guidelines
 - `license.md` - License information
 - `changelog.md` - Version history and changes
+
+**Note:** `README.md` always remains at project root and is NOT created in the wiki/ directory.
 
 ## When to Use This Skill
 
@@ -153,7 +154,7 @@ Copilot:
 - Single-word file names in lowercase follow consistent documentation conventions
 - The skill maintains version control awareness - changes are isolated and can be reviewed
 - Broken links and cross-references are automatically updated
-- **File Naming**: ONLY single-word names in lowercase (e.g., setup.md, not getting_started.md); all files including readme.md must be lowercase
+- **File Naming**: ONLY single-word names in lowercase for wiki/ files (e.g., setup.md, not getting_started.md). README.md must remain at project root and is not modified or moved by this skill.
 - The skill provides a detailed before/after summary showing consolidation benefits
 - Redundant and duplicate files are flagged for removal, not archived
 - **Force Mode**: Use `force` argument to auto-implement changes without requiring manual approval (useful when called by cel.wiki.write)

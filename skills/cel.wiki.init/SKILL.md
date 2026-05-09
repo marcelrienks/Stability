@@ -25,6 +25,7 @@ Recursively search the entire codebase for all `.md` files (except in excluded d
 - All `.md` files from any directory
 
 **Exclusions (do NOT include):**
+- `README.md` at project root (must remain in root)
 - Dot-prefixed directories (`.github/`, `.cel/`, `.git/`, `.vscode/`, etc.)
 - Package/dependency directories: `node_modules/`, `vendor/`, `lib/`, `libs/`, `.venv/`, `venv/`, etc.
 - Archive/backup directories: `archive/`, `backup/`, `bak/`, any directory with `archive`, `backup`, `orig`, `bak` in the name (case-insensitive)
@@ -33,7 +34,8 @@ Recursively search the entire codebase for all `.md` files (except in excluded d
 
 **Action:**
 - Move all discovered `.md` files to `wiki/` in a flat structure (do not preserve original directory structure)
-- Example: `src/docs/guide.md` → `wiki/guide.md`, `docs/api.md` → `wiki/api.md`
+- PRESERVE `README.md` at project root (do NOT move it)
+- Example: `src/docs/guide.md` → `wiki/guide.md`, `docs/api.md` → `wiki/api.md`, but `README.md` stays at root
 
 ### 3. Discover & Move Static Documentation
 Search the codebase for static/immutable documentation assets:
@@ -92,11 +94,11 @@ skill: "cel.wiki.init"
 
 This single command will:
 1. Create the wiki/ and wiki/raw/ directory structure at project root
-2. Discover all .md files and move them to wiki/
-3. Discover all static docs and move them to wiki/raw/
-4. Remove any empty docs/ or orig/ folders
-5. Generate a persistent context map via cel.wiki.read
-6. Display a consolidation report
+2. Discover all .md files (except README.md at root) and move them to wiki/
+3. Preserve README.md in the project root
+4. Discover all static docs and move them to wiki/raw/
+5. Remove any empty docs/ or orig/ folders
+6. Generate a persistent context map via cel.wiki.read
 
 ## Output & Reporting
 
@@ -105,6 +107,7 @@ After completion, the skill will provide:
 1. **Structure Created**: Confirm wiki/ and wiki/raw/ folders are in place at project root
 2. **Files Moved**:
    - Summary of .md files discovered and moved to wiki/ (with counts)
+   - Confirmation that README.md remained in project root
    - Summary of static assets moved to raw/ (with counts and types)
 3. **Cleanup Summary**: List of empty directories removed
 4. **Context Status**: Confirm context map generated at .cel/context.md

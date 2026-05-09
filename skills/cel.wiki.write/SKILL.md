@@ -38,7 +38,7 @@ The skill executes a comprehensive 6-phase process:
 
 ### Phase 1: Initialize Wiki Structure
 1. **Check for wiki directory**: Determine if `wiki/` and `wiki/raw/` directories exist at project root
-2. **Create if missing**: Invoke cel.wiki.init to create standardized wiki structure if needed
+2. **Create if missing**: Invoke cel.wiki.init to create standardized wiki structure if needed (README.md is preserved at project root)
 3. **Report status**: Confirm wiki structure is ready for documentation
 
 ### Phase 2: Load Existing Context
