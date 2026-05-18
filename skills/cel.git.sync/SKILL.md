@@ -81,3 +81,27 @@ Copilot:
 - The current branch must be tracking a remote branch for pull and push to work correctly
 - This skill executes steps autonomously except during complex merge conflicts, which may require manual intervention for resolution decisions
 - The skill will automatically handle multi-step operations across different git states and directories without interruption
+
+## Autonomy Boundary — Critical for Agent Behavior
+
+⚠️ **This skill is strictly user-initiated. Do NOT interpret successful execution as permission for autonomous git operations.**
+
+### What the Agent MUST NOT Do
+
+- **Do NOT automatically run this skill** after file edits, code generation, or any other operations
+- **Do NOT assume permission** to perform git operations (add, commit, pull, push) without explicit user instruction
+- **Do NOT interpret** the user running this skill once as blanket authorization for future git operations
+- **Do NOT bundle** git operations into other workflows without explicit user consent
+- **Do NOT perform ANY git functionality autonomously** unless the user expressly states and instructs it for that specific situation
+
+### User Intent Required Each Time
+
+Every execution of this skill requires an explicit trigger from the user:
+- The user must say "run git sync", "sync changes", `/cel.git.sync`, or similar direct request
+- Each git operation must be intentional and user-initiated
+- The agent should never assume the user wants git operations to happen automatically
+
+### Example of Correct Behavior
+
+❌ **WRONG**: User runs `/cel.git.sync` → Agent then automatically runs git sync after every code edit going forward  
+✓ **CORRECT**: User runs `/cel.git.sync` → Agent executes the workflow → Agent waits for the next explicit user request to run git operations again
