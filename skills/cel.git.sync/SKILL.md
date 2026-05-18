@@ -43,37 +43,6 @@ If merge conflicts occur during the pull:
 ### 5. Push to Remote
 Once the merge is complete, execute `git push origin <current-branch>` to push the synchronized changes to the remote repository.
 
-## How to Use This Skill
-
-### Option 1: Slash Command
-```
-/cel.git.sync
-```
-
-### Option 2: Named Skill
-```
-skill: "cel.git.sync"
-```
-
-## When to Use This Skill
-
-Use the Custom Git Sync skill when you need to:
-- Quickly synchronize your local work with the remote repository
-- Automatically stage, commit, and push changes in one workflow
-- Handle merge conflicts that arise during pulls
-- Generate meaningful commit messages without manual input
-
-## Example Workflow
-
-```
-User: "Run custom git sync"
-Copilot: 
-1. Stages all changes with git add .
-2. Reviews staged changes and creates a commit message
-3. Pulls from remote, handling any merge conflicts
-4. Pushes the synchronized work to remote
-```
-
 ## Important Notes
 
 - The skill requires an active git repository in the current working directory

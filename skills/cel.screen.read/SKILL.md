@@ -17,24 +17,6 @@ When you invoke this skill, it will:
 4. **Answer questions about the screenshot** in the context of your current session
 5. **Provide insights** about what's shown in the image
 
-## How to Use This Skill
-
-### Option 1: Slash Command
-```
-/cel.screen.read
-```
-
-### Option 2: Named Skill
-```
-skill: "cel.screen.read"
-```
-
-After invoking the skill, you can then ask questions about the screenshot, such as:
-- "What's shown in this screenshot?"
-- "Can you find the button labeled X?"
-- "What errors or warnings are visible?"
-- "Describe what you see in detail"
-
 ## Workflow
 
 The skill executes the following process:
@@ -57,47 +39,6 @@ The skill executes the following process:
 | **Linux/WSL** | `/mnt/c/Users/<username>/Pictures/Screenshots` or `~/Pictures/Screenshots` | `xclip` / `xsel` |
 
 The skill searches each location for images modified within the last 2 minutes. If no recent file is found, it checks the system clipboard.
-
-## Use Case: Debugging in Agent Sessions
-
-This skill is designed to streamline debugging workflows when working with agents in the command line or VS Code:
-
-1. **Take a screenshot** during your development session when you encounter an issue, error, or unexpected behavior
-2. **Invoke the skill** with `/cel.screen.read` while talking to the agent
-3. **The agent analyzes** the visual output (errors, terminal state, UI, logs, etc.) in the context of your current debugging task
-4. **Get detailed insights** about what's happening, combining visual information with knowledge of your session activity
-5. **Accelerate troubleshooting** by having the agent understand both code-level context and visual debugging information
-
-## When to Use This Skill
-
-Use this skill when you want to:
-- Review the latest screenshot quickly without manual file navigation
-- Get AI analysis of what's shown in your screenshots during debugging
-- Ask questions about visual content (errors, terminal output, UI state) in context
-- Troubleshoot issues by providing visual evidence to the agent
-- Document or discuss what's displayed on your screen to the agent for better assistance
-
-## Example Interactions
-
-**Debugging an error:**
-```
-User: /cel.screen.read
-User: What error messages are visible?
-
-Copilot:
-Locates the latest screenshot, analyzes it, identifies stack traces or error messages, and provides context for debugging.
-```
-
-**Reviewing terminal output:**
-```
-User: /cel.screen.read
-User: Can you read the terminal output?
-
-Copilot:
-Finds the screenshot, reads terminal output, identifies warnings or failures, and connects them to your current session work.
-```
-
-If no screenshot is found in the designated directory or clipboard, the skill will state this clearly.
 
 ## Important Notes
 

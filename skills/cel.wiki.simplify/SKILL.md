@@ -19,20 +19,6 @@ When you invoke this skill, it will:
 
 **Note:** Analysis scope is the wiki directory only (modifications apply to wiki/ files), but the skill leverages full project context from the persisted context file (.cel/context.md) and the entire codebase to determine best solutions.
 
-## How to Use This Skill
-
-### Option 1: Slash Command
-```
-/cel.wiki.simplify        # Interactive mode (default): requires confirmation before changes
-/cel.wiki.simplify force  # Force mode: auto-implements best solutions without confirmation
-```
-
-### Option 2: Named Skill
-```
-skill: "cel.wiki.simplify"
-skill: "cel.wiki.simplify force"
-```
-
 ## Workflow
 
 The skill executes a comprehensive 4-fold process:

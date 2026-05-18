@@ -60,20 +60,6 @@ Confirm override. Example: "Forced refresh: project re-scanned, context updated.
 
 All outputs: concise 2-3 sentences confirming project nature and cache/scan status.
 
-## How to Use This Skill
-
-### Option 1: Slash Command
-```
-/cel.wiki.read          # Default: load from cache if available, rescan if changed
-/cel.wiki.read refresh  # Force refresh: always rescan and update context
-```
-
-### Option 2: Named Skill
-```
-skill: "cel.wiki.read"
-skill: "cel.wiki.read refresh"
-```
-
 ## Important Notes
 
 - **Efficiency First**: Goal is move "Reading" → "Knowing." Reuse cached context if hash match.
