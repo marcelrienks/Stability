@@ -20,14 +20,11 @@ The solution uses three components:
 
 ## Prerequisites
 
-This document provides step-by-step instructions for three environments: **Windows (PowerShell or Git Bash)**, **Windows WSL (Ubuntu on WSL)**, and **macOS (Terminal with zsh or bash)**.
-
-Required for all environments:
-- A Bitwarden account with an item named "github personal" that contains your GitHub private SSH key in the Notes field.
-- Git installed with SSH support.
-- Ability to install packages and create files in your home directory (e.g., ~/.local/bin, ~/.ssh, ~/.githooks).
-- Node.js + npm (recommended) OR access to an OS package manager (Homebrew/apt/chocolatey/scoop) as noted in the installation steps.
-
+- Windows 11 or similar (works with PowerShell and WSL/Git Bash)
+- Bitwarden account with GitHub SSH key stored in vault
+- Git installed with SSH support
+- npm (Node Package Manager) installed
+- Access to run commands in PowerShell and/or Bash terminal
 
 ---
 
@@ -37,25 +34,13 @@ Required for all environments:
 
 The Bitwarden CLI is the primary tool for accessing your Bitwarden vault from the command line.
 
-Installation options (pick one appropriate for your environment):
+#### Installation Method: npm (Recommended)
 
-- npm (Recommended — cross-platform)
+Install globally via npm:
+
 ```bash
 npm install -g @bitwarden/cli
 ```
-
-- macOS (Homebrew)
-```bash
-brew install bitwarden-cli
-```
-
-- Windows (PowerShell — Chocolatey)
-```powershell
-choco install bitwarden-cli -y
-```
-
-- WSL / Linux
-Use npm as above, or install via your distro package manager if a native package is available.
 
 **Verification:**
 ```bash
@@ -64,61 +49,40 @@ bw --version
 
 Expected output: `2026.4.2` (or similar version number)
 
-Notes:
-- npm works across PowerShell, Git Bash, WSL, and macOS Terminal and is therefore a dependable cross-platform option.
-- If you prefer native packages on macOS or Windows, use the Homebrew/Chocolatey alternatives above.
+**Why npm?** The npm installation works across PowerShell, WSL, Git Bash, and other shell environments consistently.
 
 ---
 
 ### Step 2: Install jq (JSON Query Tool)
 
-`jq` is used for parsing JSON output from Bitwarden commands. Install the platform-appropriate `jq` binary or package:
+`jq` is used for parsing JSON output from Bitwarden commands. While we currently use simpler `bw` commands, having `jq` available is recommended for future enhancements.
 
-- macOS (Homebrew):
+#### Installation Method: Direct Binary Download
+
+Download the jq executable directly to your local bin directory:
+
 ```bash
-brew install jq
+curl -L https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-win64.exe \
+  -o ~/.local/bin/jq.exe && chmod +x ~/.local/bin/jq.exe
 ```
-
-- WSL / Debian/Ubuntu:
-```bash
-sudo apt update && sudo apt install -y jq
-```
-
-- Windows (PowerShell / Git Bash):
-  - Using Chocolatey:
-  ```powershell
-  choco install jq -y
-  ```
-  - Using Scoop:
-  ```powershell
-  scoop install jq
-  ```
-  - Or download the Windows binary and place it in ~/.local/bin:
-  ```bash
-  curl -L https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-win64.exe -o ~/.local/bin/jq.exe && chmod +x ~/.local/bin/jq.exe
-  ```
 
 **Verification:**
 ```bash
 jq --version
 ```
 
-Expected output: `jq-1.8.1` (or similar)
+Expected output: `jq-1.8.1`
 
-**Note on PATH and shell profiles:**
-Ensure `~/.local/bin` is in your PATH. Add it to the correct shell profile for your environment:
+**Note on location:** The `~/.local/bin/` directory should already be in your PATH. If not, add it:
 
-- macOS (zsh):
 ```bash
-echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc && source ~/.zshrc
-```
-- WSL/Linux/Git Bash:
-```bash
-echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
-```
-- PowerShell (Windows):
-  Add `%USERPROFILE%\\.local\\bin` to your User PATH via Windows Environment Variables (Settings → System → About → Advanced system settings → Environment Variables) or use a package manager that updates PATH for you.
+# Check if ~/.local/bin is in PATH
+echo $PATH | grep -q '.local/bin' && echo "Already in PATH" || echo "Not in PATH"
 
+# If not in PATH, add to ~/.bashrc or ~/.bash_profile
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+```
 
 ---
 
@@ -307,7 +271,7 @@ if [ -f "$KEY_FILE" ]; then
 fi
 
 # Key doesn't exist or is stale, load it
-exec "$HOME/.local/bin/bw-load-github-key"
+exec /c/Users/admin/.local/bin/bw-load-github-key
 ```
 
 **To create this script:**
@@ -385,12 +349,10 @@ bw-cleanup-github-key
 Edit or create `~/.ssh/config`:
 
 ```bash
-# On macOS, WSL, or Git Bash:
+# On Windows/WSL/Git Bash
 nano ~/.ssh/config
 # or
 vim ~/.ssh/config
-# On Windows (PowerShell), open the file in Notepad:
-# notepad "$env:USERPROFILE\\.ssh\\config"
 ```
 
 **Content to add:**
@@ -450,10 +412,7 @@ git config --global core.hooksPath ~/.githooks
 **Verification:**
 ```bash
 git config --global core.hooksPath
-# Should output something like:
-# /Users/your-username/.githooks      (macOS)
-# /home/your-username/.githooks       (WSL/Linux)
-# C:\\Users\\your-username\\.githooks   (Windows PowerShell/Git Bash)
+# Should output: /c/Users/admin/.githooks
 ```
 
 #### Option 2: Per-Repository Configuration
@@ -491,10 +450,8 @@ Verify the scripts work independently:
 # Check if the key file was created
 ls -la ~/.ssh/github_personal_bw
 
-# Should show the key file exists and has `-rw-------` permissions (owner read/write only). Example paths by OS:
-# - macOS:    -rw-------  1 youruser  staff  1679 May 22 15:30 /Users/youruser/.ssh/github_personal_bw
-# - WSL/Linux: -rw------- 1 youruser youruser 1679 May 22 15:30 /home/youruser/.ssh/github_personal_bw
-# - Git Bash/Windows: -rw------- 1 youruser Administrators 1679 May 22 15:30 /c/Users/youruser/.ssh/github_personal_bw
+# Should output something like:
+# -rw------- 1 admin admin 1679 May 22 15:30 /home/admin/.ssh/github_personal_bw
 ```
 
 ### Test 2: SSH Connection to GitHub
@@ -728,11 +685,9 @@ Use this checklist to verify a complete implementation:
 
 This solution has been tested and is compatible with:
 
-- **Windows (native):** PowerShell and Git Bash (MINGW64)
-- **Windows WSL:** Ubuntu on WSL (bash)
-- **macOS:** Terminal (zsh or bash)
-- **Tools:** Git, npm (or Homebrew/apt/chocolatey/scoop), Bitwarden CLI (`bw`), jq
-
+- **Shells:** PowerShell, Git Bash (MINGW64), WSL, bash
+- **OS:** Windows 11 Pro
+- **Tools:** Git, npm, Bitwarden CLI, jq
 
 ### Notes for Different Environments
 
@@ -745,17 +700,9 @@ This solution has been tested and is compatible with:
 - If tools are missing, use apt: `apt install jq`
 
 **Git Bash (MINGW64) users:**
-- Recommended on Windows for a POSIX-like shell
-- Use forward slashes `/` in paths
-- Home directory is typically `/c/Users/your-username/` (Windows path exposed to the MSYS environment)
-
-**WSL users:**
-- Use your distro package manager (apt) to install native tools
-- Home directory is `/home/your-username/`
-
-**macOS users:**
-- macOS Terminal (zsh) is supported; use Homebrew for packages (`brew install jq`)
-- Home directory is `/Users/your-username/`
+- Recommended environment for this solution
+- All paths should use forward slashes `/`
+- Home directory is `/c/Users/your-username/`
 
 ---
 
