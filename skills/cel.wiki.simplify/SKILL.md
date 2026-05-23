@@ -7,6 +7,8 @@ description: "Audit and simplify project wiki by consolidating redundancy and el
 
 This skill provides a comprehensive wiki audit and simplification service. It reads and analyzes all markdown files within a project's wiki directory, identifies inefficiencies and inconsistencies, creates a consolidation and simplification plan, and executes the improvements while preserving all essential information.
 
+**Value-preservation rule:** Simplification, consolidation, and reductions in verbosity MUST NOT reduce the substantive value or functionality of any document. Suggestions that would remove essential information or diminish a document's usefulness will be rejected or rephrased to preserve full value while reducing complexity and confusion.
+
 ## What This Skill Does
 
 When you invoke this skill, it will:
@@ -32,7 +34,7 @@ The skill performs a thorough audit of all markdown files in the wiki directory 
 2. **Locate Documentation**: Find all `.md` files in the `wiki/` directory (excluding wiki/raw/)
 3. **Read Content**: Load and parse all markdown files, extracting:
    - File names and purposes
-   - **Full-file requirement:** Read each markdown file in its entirety (not just the first section or introductory lines). The agent must obtain a full understanding of each file's content and context before proposing or implementing any consolidation, deletion, or rewrite.
+   - **Full-file reads required**: When reading any documentation file as part of wiki workflows, the agent MUST read the entire file contents (not just the first lines or a snippet) to obtain full contextual understanding before making decisions.
    - Headers and structure
    - Content and key information
    - Metadata and frontmatter (if present)
@@ -52,7 +54,7 @@ Based on the analysis (informed by full project context), the skill creates a de
 2. **Eliminate Duplicates**: Flag redundant content for removal
 3. **Resolve Contradictions**: Recommend authoritative versions
 4. **Propose File Structure**: Suggest simplified file organization
-5. **Define Naming**: Recommend single-word file names in lowercase format:
+5. **Define Naming**: File naming convention: All wiki files in `wiki/` must use single-word, lowercase file names (for example, `setup.md`).
    - Examples: readme.md, setup.md, install.md, guide.md, api.md, config.md, faq.md, troubleshoot.md
 6. **Create Execution Steps**: Detail specific actions (consolidations, deletions, rewrites) for wiki/ files only
 7. **Estimate Impact**: Show content reduction and quality improvements
@@ -134,15 +136,16 @@ Copilot:
 ## Important Notes
 
 - **Modification scope**: The skill modifies **only** markdown files in the `wiki/` directory (NOT wiki/raw/)
-- **Analysis scope**: Uses full project context (persisted context file and codebase) to inform analysis and solutions
- - **Full-file reads required**: During analysis and prior to making decisions, the agent MUST read the full contents of each documentation file. Partial scans or relying on only headings/summaries is not acceptable for producing reliable simplification plans or edits.
+ - **Analysis scope**: Uses full project context (persisted context file and codebase) to inform analysis and solutions
+ - **Full-file reads required**: When reading any documentation file as part of wiki workflows, the agent MUST read the entire file contents (not just the first lines or a snippet) to obtain full contextual understanding before making decisions.
+ - **Value-preservation requirement**: Any proposed simplification or consolidation must preserve the full value and functionality of the original content; do not suggest edits that would remove critical details, examples, commands, or operational steps.
 - **Phase 3 (Confirmation)** is mandatory by default - no changes are made without explicit approval
 - Use the `force` flag to skip Phase 3 and auto-implement the best solutions without confirmation
 - All critical information is preserved during consolidation
-- Single-word file names in lowercase follow consistent documentation conventions
+ - File naming convention: All wiki files in `wiki/` must use single-word, lowercase file names (for example, `setup.md`).
 - The skill maintains version control awareness - changes are isolated and can be reviewed
 - Broken links and cross-references are automatically updated
-- **File Naming**: ONLY single-word names in lowercase for wiki/ files (e.g., setup.md, not getting_started.md). README.md must remain at project root and is not modified or moved by this skill.
+- **File Naming**: All wiki files in `wiki/` must use single-word, lowercase file names (for example, `setup.md`). `README.md` remains at project root and is not moved.
 - The skill provides a detailed before/after summary showing consolidation benefits
 - Redundant and duplicate files are flagged for removal, not archived
 - **Force Mode**: Use `force` argument to auto-implement changes without requiring manual approval (useful when called by cel.wiki.write)

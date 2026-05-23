@@ -48,8 +48,9 @@ Once the merge is complete, execute `git push origin <current-branch>` to push t
 - The skill requires an active git repository in the current working directory
 - The user must have appropriate permissions on the remote repository to push changes
 - The current branch must be tracking a remote branch for pull and push to work correctly
-- This skill executes steps autonomously except during complex merge conflicts, which may require manual intervention for resolution decisions
-- The skill will automatically handle multi-step operations across different git states and directories without interruption
+ - The current branch must be tracking a remote branch for pull and push to work correctly
+ - The skill performs multi-step git operations only when explicitly triggered by the user; during that triggered run it may perform subsequent steps without further prompts, but it will never schedule or initiate autonomous git operations in the future
+ - The skill will handle the steps of a triggered operation across multiple git states and directories during that run, but it does not and will not initiate additional runs on its own
 
 ## Autonomy Boundary — Critical for Agent Behavior
 

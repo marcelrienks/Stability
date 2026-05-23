@@ -34,17 +34,17 @@ The skill executes the following process:
 
 | Platform | Default Location(s) | Clipboard Fallback |
 |----------|---------------------|--------------------|
-| **macOS** | `~/Documents`, `~/Desktop` | `pbpaste` |
+| **macOS** | `~/Documents`, `~/Desktop` | `pngpaste` (requires installation) |
 | **Windows** | `%USERPROFILE%\Pictures\Screenshots` | `Get-ClipboardImage` |
 | **Linux/WSL** | `/mnt/c/Users/<username>/Pictures/Screenshots` or `~/Pictures/Screenshots` | `xclip` / `xsel` |
 
-The skill searches each location for images modified within the last 2 minutes. If no recent file is found, it checks the system clipboard.
+The skill searches each location for images modified within the last 2 minutes. If no recent file is found, it checks the system clipboard for an image. On macOS, clipboard-image fallback requires a user-installed tool such as `pngpaste`; if that tool is not installed, clipboard fallback is disabled.
 
 ## Important Notes
 
 - **Platform detection first**: The skill identifies your OS, then locates the appropriate screenshot directory
 - **Supported formats**: PNG, JPEG, and GIF
 - **Time-based filtering**: Only considers screenshots modified within the last 2 minutes for recency
-- **Clipboard fallback**: Automatically checks system clipboard if no recent file is found
+- **Clipboard fallback**: Checks the system clipboard for an image when no recent screenshot file is found. On macOS this requires a user-installed tool such as `pngpaste`; if such a tool is not present, clipboard fallback is not available.
 - **Session context**: Analysis respects your current debugging or development task
-- **Autonomous execution**: Multi-step platform detection and directory navigation happen automatically without permission prompts
+- **Automation during invoked runs**: During an explicit user invocation, the skill automates platform detection and directory/clipboard checks to locate screenshots; it does not initiate runs on its own.

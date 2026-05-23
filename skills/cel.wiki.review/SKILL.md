@@ -65,13 +65,32 @@ Identifies inconsistencies in naming, format, terminology, and structure within 
 
 - **Sequential Analysis**: Fallacies are fixed before contradictions are analyzed (fallacy fixes may resolve some contradictions)
 - **Interactive Confirmation**: Each issue requires user approval unless `auto` mode is used
- - **Full-file reads required**: Before analyzing or flagging any issue, the agent MUST read each targeted documentation file in its entirety and achieve a full contextual understanding; scanning only the first few lines or a partial snippet is insufficient for reliable review findings.
+ - **Full-file reads required**: When reading any documentation file as part of wiki workflows, the agent MUST read the entire file contents (not just the first lines or a snippet) to obtain full contextual understanding before making decisions.
 - **Code Updates Mid-Review**: Changes are applied after each issue resolution, allowing subsequent analyses to reflect previous fixes
 - **Scope**: Reviews wiki/ directory and root README.md only. Excludes wiki/raw/ directory
 - **Auto Mode**: When `auto` is specified, the skill uses heuristics to select the best available solution (prefers clarity, consistency, and minimal change)
 - **Content Preservation**: All file content is preserved; only identified issues are modified
 - **Integration**: Works well after `/cel.wiki.write` or `/cel.wiki.simplify` to ensure wiki is logically sound
 - **Complementary**: Use after major wiki updates to verify consistency across all documentation files
+
+## Interactive Q&A Standard
+
+This skill uses a concise interactive Q&A pattern for all user-driven review decisions. Use this section as the canonical format for presenting issues and collecting user choices.
+
+- **Overall pattern:** Present issues grouped or one-by-one with 2–3 clear resolution options; expect the user to reply with compact choice codes (e.g., `1A, 2B, 3C` or `auto`).
+- **Per-item structure:**
+  - **Issue header:** short label (e.g., "Issue 1 — False attribution").
+  - **Location / context:** file reference and brief quoted text or location.
+  - **Why:** one-line explanation of the problem/impact.
+  - **Options:** 2–3 labeled choices (`A`, `B`, `C`) with concise outcomes and trade-offs.
+  - **Selection prompt:** explicit instruction how to reply (example: `1A, 2C, 3B` or `auto`).
+  - **Next step note:** what the assistant will do after the choice (apply patch, ask follow-up, etc.).
+- **Reply format expected from user:** compact list of choice codes (e.g., `1A, 2B, 3C`) or the single word `auto`.
+- **Defaults & automation:** The assistant may propose a default used when the user replies `auto` (heuristic: clarity-first, minimal changes) and documents it.
+- **Preambles & actions:** Before making edits, the assistant gives a 1–2 sentence preamble describing the upcoming automated actions. After edits, the assistant summarizes files changed and updates the review status.
+- **Meta conventions:** Preserve content when possible, prefer surgical edits, require explicit approval unless `auto`/`force` is specified, and log all changes for review.
+
+Include this standard in every interactive prompt the skill generates unless the user explicitly requests a different interaction style.
 
 ## Implementation Rules
 

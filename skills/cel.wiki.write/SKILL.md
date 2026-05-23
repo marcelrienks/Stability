@@ -65,4 +65,5 @@ Apply content management based on flags (default: update existing; `overwrite`: 
 - Uses codebase analysis in addition to existing documentation for comprehensive understanding
 - The `overwrite` flag enables complete documentation refresh when needed
 - Generated documentation is automatically simplified and consolidated
-- Single-word file names in lowercase provide consistent documentation conventions
+ - Single-word file names in lowercase provide consistent documentation conventions
+ - File naming convention: All wiki files in `wiki/` must use single-word, lowercase file names (for example, `setup.md`). `README.md` remains at project root and is not moved.
