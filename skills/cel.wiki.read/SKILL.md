@@ -63,6 +63,7 @@ All outputs: concise 2-3 sentences confirming project nature and cache/scan stat
 ## Important Notes
 
 - **Efficiency First**: Goal is move "Reading" → "Knowing." Reuse cached context if hash match.
+ - **Full-file reads required**: When reading any documentation file, the agent MUST read the entire file contents (not just the first few lines or a brief snippet). A full understanding of the file and its surrounding context must be obtained before relying on it to make decisions or generate persistent context.
 - **Auto-Detection**: Hash check automatic. If wiki changes, rescan triggered without manual refresh.
 - **Force Override**: Use `/cel.wiki.read refresh` to skip hash check and force full rescan (useful after major wiki restructure).
 - **No Code Bloat**: Read wiki only, not source code (unless explicitly linked).

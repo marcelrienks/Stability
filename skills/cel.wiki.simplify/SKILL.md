@@ -32,6 +32,7 @@ The skill performs a thorough audit of all markdown files in the wiki directory 
 2. **Locate Documentation**: Find all `.md` files in the `wiki/` directory (excluding wiki/raw/)
 3. **Read Content**: Load and parse all markdown files, extracting:
    - File names and purposes
+   - **Full-file requirement:** Read each markdown file in its entirety (not just the first section or introductory lines). The agent must obtain a full understanding of each file's content and context before proposing or implementing any consolidation, deletion, or rewrite.
    - Headers and structure
    - Content and key information
    - Metadata and frontmatter (if present)
@@ -134,6 +135,7 @@ Copilot:
 
 - **Modification scope**: The skill modifies **only** markdown files in the `wiki/` directory (NOT wiki/raw/)
 - **Analysis scope**: Uses full project context (persisted context file and codebase) to inform analysis and solutions
+ - **Full-file reads required**: During analysis and prior to making decisions, the agent MUST read the full contents of each documentation file. Partial scans or relying on only headings/summaries is not acceptable for producing reliable simplification plans or edits.
 - **Phase 3 (Confirmation)** is mandatory by default - no changes are made without explicit approval
 - Use the `force` flag to skip Phase 3 and auto-implement the best solutions without confirmation
 - All critical information is preserved during consolidation

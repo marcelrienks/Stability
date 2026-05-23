@@ -65,6 +65,7 @@ Identifies inconsistencies in naming, format, terminology, and structure within 
 
 - **Sequential Analysis**: Fallacies are fixed before contradictions are analyzed (fallacy fixes may resolve some contradictions)
 - **Interactive Confirmation**: Each issue requires user approval unless `auto` mode is used
+ - **Full-file reads required**: Before analyzing or flagging any issue, the agent MUST read each targeted documentation file in its entirety and achieve a full contextual understanding; scanning only the first few lines or a partial snippet is insufficient for reliable review findings.
 - **Code Updates Mid-Review**: Changes are applied after each issue resolution, allowing subsequent analyses to reflect previous fixes
 - **Scope**: Reviews wiki/ directory and root README.md only. Excludes wiki/raw/ directory
 - **Auto Mode**: When `auto` is specified, the skill uses heuristics to select the best available solution (prefers clarity, consistency, and minimal change)
